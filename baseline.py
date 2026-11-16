@@ -12,6 +12,7 @@ from pathlib import Path
 import shutil
 import sys
 
+from dotenv import load_dotenv
 from tableqa.cloud import QwenClient
 from tableqa.documents import document_info, source_path
 from tableqa.pipeline import Config, run
@@ -34,6 +35,7 @@ def nonnegative(value):
 
 
 def main(argv=None):
+    load_dotenv()
     parser = argparse.ArgumentParser(description="天池 532510 Qwen3.8-Flash baseline")
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("inspect", "run", "validate"):
