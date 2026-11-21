@@ -57,10 +57,12 @@ def atomic_json(path: Path, value) -> None:
         temporary.unlink(missing_ok=True)
 
 
-def fingerprint(question: Question, document: Document, config: Config) -> str:
+def fingerprint(question: Question, document: Document, config: Config, context: str = "") -> str:
     values = {"question": asdict(question), "document_sha256": document.sha256,
               "render_version": document.images[0].parent.name,
               "prompt_sha256": PROMPT_HASH, "config": asdict(config), "pipeline": 2}
+    if context:
+        values["context_sha256"] = hashlib.sha256(context.encode()).hexdigest()
     # Worker count changes throughput only, not the generated answer.
     values["config"].pop("workers")
     return hashlib.sha256(compact_json(values).encode()).hexdigest()
@@ -92,9 +94,9 @@ def previous_structure_context(question: Question, output_dir: Path, key: str) -
 
 def solve(question: Question, document: Document, config: Config, client,
           output_dir: Path, refresh: bool = False, recovery_attempts: int = 1,
-          recovery_first: bool = False) -> dict:
+          recovery_first: bool = False, context: str = "") -> dict:
     started = time.monotonic()
-    key = fingerprint(question, document, config)
+    key = fingerprint(question, document, config, context)
     record_path = output_dir / "records" / f"{key}.json"
     if record_path.exists() and not refresh:
         try:
@@ -106,8 +108,10 @@ def solve(question: Question, document: Document, config: Config, client,
     prior_structure_context = previous_structure_context(question, output_dir, key)
     result = {"id": question.id, "question_type": question.question_type,
               "fingerprint": key, "cached": False, "answer": "", "status": "failed"}
+    extra_content = [{"type": "text", "text": context}] if context else []
     messages = [{"role": "user", "content": [
         {"type": "text", "text": question_prompt(question)},
+        *extra_content,
         *image_content(document, config.max_pixels)]}]
     attempts = []
 
@@ -167,6 +171,7 @@ def solve(question: Question, document: Document, config: Config, client,
     if recovery_mode and recovery_attempts and not (stopped and stopped.is_set()):
         messages = [{"role": "user", "content": [
             {"type": "text", "text": recovery_prompt(question, recovery_mode, document)},
+            *extra_content,
             *image_content(document, config.max_pixels)]}]
         if recovery_mode == "grid":
             messages.extend(prior_structure_context)
@@ -202,7 +207,7 @@ def solve(question: Question, document: Document, config: Config, client,
 
 def run(questions: list[Question], files_dir: Path, output_dir: Path, config: Config,
         client, *, limit: int | None = None, refresh: bool = False, recovery_attempts: int = 1,
-        recovery_first: bool = False, progress=print) -> dict:
+        recovery_first: bool = False, progress=print, contexts: dict[str, str] | None = None) -> dict:
     started = time.monotonic()
     output_dir.mkdir(parents=True, exist_ok=True)
     selected = questions if limit is None else questions[:limit]
@@ -230,7 +235,7 @@ def run(questions: list[Question], files_dir: Path, output_dir: Path, config: Co
             else:
                 futures[executor.submit(solve, question, documents[question.file_name],
                                         config, client, output_dir, refresh, recovery_attempts,
-                                        recovery_first)] = question
+                                        recovery_first, (contexts or {}).get(question.file_name, ""))] = question
         for future in as_completed(futures):
             question = futures[future]
             try:

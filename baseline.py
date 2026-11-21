@@ -34,7 +34,7 @@ def nonnegative(value):
     return number
 
 
-def main(argv=None):
+def main(argv=None, *, runner=run, default_output="runs/qwen3_8_flash", publish=True):
     load_dotenv()
     parser = argparse.ArgumentParser(description="天池 532510 Qwen3.8-Flash baseline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -49,7 +49,7 @@ def main(argv=None):
         if name == "validate":
             command.add_argument("--submission", type=Path, default=Path("submission.xlsx"))
     command = sub.choices["run"]
-    command.add_argument("--output-dir", type=Path, default=Path("runs/qwen3_8_flash"))
+    command.add_argument("--output-dir", type=Path, default=Path(default_output))
     command.add_argument("--base-url", default=os.getenv("DASHSCOPE_BASE_URL", ""),
                          help="百炼 compatible-mode/v1 地址，或环境变量 DASHSCOPE_BASE_URL")
     command.set_defaults(model="qwen3.8-flash")
@@ -94,13 +94,13 @@ def main(argv=None):
             client = QwenClient(os.getenv("DASHSCOPE_API_KEY", ""), args.base_url, args.model,
                                 timeout=args.timeout, retries=args.api_retries,
                                 max_requests=args.max_requests)
-            report = run(questions, args.files, args.output_dir, config, client,
+            report = runner(questions, args.files, args.output_dir, config, client,
                          limit=args.limit, refresh=args.refresh, recovery_attempts=args.recovery_attempts,
                          recovery_first=args.recovery_first)
             result = {k: report[k] for k in ("total_questions", "selected_questions", "statuses",
                                             "api_requests_this_run", "usage_this_run", "submission_check")}
             result["output"] = str((args.output_dir / "submission.xlsx").resolve())
-            if (report["selected_questions"] == report["total_questions"]
+            if (publish and report["selected_questions"] == report["total_questions"]
                     and report["submission_check"]["nonempty"] == report["total_questions"]
                     and not report["statuses"].get("failed")):
                 generated = args.output_dir / "submission.xlsx"
