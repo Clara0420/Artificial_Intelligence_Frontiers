@@ -1,0 +1,23 @@
+{
+  "variants/p1/baseline.py": "85f11b01e335a9f9d24af522a3b4320527d809831605e496b16526eca5bfd80f",
+  "variants/p1/original_manifest.json": "8cbb73d97b3206ff6fbc23ca4cfeea7e6f636d42dc888f9572943503029ed301",
+  "variants/p1/ocr_pipeline.py": "1a215d779023da77ba24f7b8d67b80cffc66298758b9f44847aaf3c6af435385",
+  "variants/p1/test_p1.py": "2c994ce45bcd4fa1aa313248efb3c0e62aa748e1654d9301810b2083cc1c4500",
+  "variants/p1/merge_submission.py": "efeba16a6dc0a45fea0bdd5dae4fed9a09a6cb5c03b67b997961ec0562f2cbde",
+  "variants/p1/README.md": "18366932f0b0286bd8643232a272addf969773a028b91e55474615318c290227",
+  "variants/p1/test_boundaries.py": "75269e805c73ce51c7ed30aca81fc7e80b678d3f90c86b443d0000577aff73a3",
+  "variants/p1/revalidate.py": "d43bc9a7c00beea499dde7d7d6d170cee2818876f2914ccb8fe318fc026e45eb",
+  "variants/p1/tableqa/cloud.py": "1c3da14b79842e167393d294b58aa31e8331ed1eec7f2e47b95c72925a2be075",
+  "variants/p1/tableqa/recovery.py": "273882ac34f54b9c4a1561ad9c4a2c2cc00d9285064927ab04e6dff96a3afc73",
+  "variants/p1/tableqa/documents.py": "785a8f6bf4f41ef4e7f429cfd2c919cc32b34e9fb9193d416dcc4e46187ed97d",
+  "variants/p1/tableqa/__init__.py": "5de135f8c0d44f928392c79171f72f980d878b131007aeee6b7c690e5d316c7e",
+  "variants/p1/tableqa/prompts.py": "f277abd46b175be4048bab72b4aadaf4e99df7f428ce47c04c25fb5878e3b3ae",
+  "variants/p1/tableqa/pipeline.py": "de23bda7bb2f614ded9a1d1d95325bc5a28cd1197218c9b2677e8b4f43ba46bb",
+  "variants/p1/tableqa/xlsxio.py": "1fbb0dd370c367d7c65ec457b7944a371a8d9d208cf167e3604ffc443950b70a",
+  "variants/p1/tableqa/schema.py": "95c147c132a995d66f4c5aad11d8d8b0b9429cb46fc70d4b4d5ccf53ff2854e9",
+  "variants/p1/tableqa/ocr_pipeline.py": "47fe77bc3a8a4f9f550384bb0aba345db99ba6d44a833dc809993c62c02b17ca",
+  "variants/p1/tableqa/evidence.py": "a5debac4b3d5e441e174058a7f24ff6a339d8f1ac08ef012886e977a089d1614",
+  "variants/p1/tableqa/retrieval.py": "d1341b2544d59abfc28f56cb54c040925f7ec400342fd474cb48af36104fbd49",
+  "variants/p1/tableqa/experiment.py": "76186df6ff6cdc866d7e2876dcda350e6f24d3fc9557edf2fcbec4b2e7eed1c7",
+  "variants/p1/tableqa/boundaries.py": "9421203edd15b055d4b4c6a45cf0e18a942a713d30e5335ce795672f5a48eecd"
+}
