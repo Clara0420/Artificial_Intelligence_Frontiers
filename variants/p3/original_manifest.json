@@ -1,0 +1,12 @@
+{
+  "baseline.py": "977f49db89dc11193bbf54028df8b22ec231dbc6288d1add97a0fda3c74ee4da",
+  "tableqa/cloud.py": "1c3da14b79842e167393d294b58aa31e8331ed1eec7f2e47b95c72925a2be075",
+  "tableqa/recovery.py": "05fae2c2dbf4a4a60c3b28fa3126762e075c005df2eaf8718b8643e175809cce",
+  "tableqa/documents.py": "785a8f6bf4f41ef4e7f429cfd2c919cc32b34e9fb9193d416dcc4e46187ed97d",
+  "tableqa/__init__.py": "5de135f8c0d44f928392c79171f72f980d878b131007aeee6b7c690e5d316c7e",
+  "tableqa/prompts.py": "f277abd46b175be4048bab72b4aadaf4e99df7f428ce47c04c25fb5878e3b3ae",
+  "tableqa/pipeline.py": "0c19ded3e4eb72bbc6cafdfd268d274d15eaa7afe8870f9c98906b098888dfaf",
+  "tableqa/xlsxio.py": "63e69164d8e02a5974257a00cec2ca66c6ce1412dd0f38d1e559bf23b8a58aaf",
+  "tableqa/schema.py": "71915d37e480627ca860fc229625283cfcfadb66b2c10e91553accdb0236838b",
+  "tableqa/ocr_pipeline.py": "47fe77bc3a8a4f9f550384bb0aba345db99ba6d44a833dc809993c62c02b17ca"
+}
